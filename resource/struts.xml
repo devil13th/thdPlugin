@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- 
+	<constant name="struts.devMode" value="true" />
+	 -->
+	<constant name="struts.multipart.maxSize" value="102400000000" />
+	<constant name="struts.locale" value="zh_CN"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<constant name="struts.action.extension" value="do,action"></constant>
+    
+    <!-- 全局 -->
+    <package name="myDefault" extends="struts-default" >
+    	<global-results>
+    		<result name="err">/pub/err.jsp</result>
+    		<result name="msg">/pub/msg.jsp</result>
+    		<result name="ajax">/pub/ajax.jsp</result>
+    	</global-results>
+    </package>
+    
+    <!-- jquery data grid -->
+    <package name="easyUi" extends="myDefault" namespace="/easyUi">
+    	<action name="easyUi" class="easyUiAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    
+    
+    <!-- jquery ztree -->
+    <package name="tree" extends="myDefault" namespace="/tree">
+    	<action name="tree_*" class="zTreeAction" method="{1}">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    <package name="upload" extends="myDefault" namespace="/upload">
+    	<action name="upload" class="uploadAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    <package name="ueditor" extends="myDefault" namespace="/ueditor">
+    	<action name="ueditor" class="ueditorAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    <package name="kindeditor" extends="myDefault" namespace="/kindeditor">
+    	<action name="kindeditor" class="kindeditorAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    <package name="test" extends="myDefault" namespace="/test">
+    	<action name="test" class="testAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    <!-- datatables -->
+    <package name="datatables" extends="myDefault" namespace="/datatables">
+    	<action name="datatables" class="dataTablesAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    <!-- bootstrap -->
+    <package name="bootstrap" extends="myDefault" namespace="/bootstrap">
+    	<action name="bootstrap" class="bootstrapAction">
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    <!-- auth jwt-->
+    <package name="cookie" extends="myDefault" namespace="/cookie">
+    	<action name="cookie" class="cookieAction" >
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    <!-- ajax cors -->
+    <package name="cors" extends="myDefault" namespace="/cors">
+    	<action name="cors" class="corsAction" >
+    		<result>${forwardPage}</result>
+    	</action>
+    </package>
+    
+    
+</struts>

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.thd.pojo.data">
+	<class
+		name="SysUser"
+		table="sys_user"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="Id"
+			type="string"
+			column="user_id"
+		>
+			<generator class="uuid.hex"/>
+		</id>
+
+		<property
+			name="UserName"
+			column="user_name"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="UserSex"
+			column="user_sex"
+			type="integer"
+			not-null="false"
+			length="11"
+		/>
+		<property
+			name="UserMail"
+			column="user_mail"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="UserTel"
+			column="user_tel"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="UserBirthday"
+			column="user_birthday"
+			type="date"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="UserStatus"
+			column="user_status"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="OrgId"
+			column="org_id"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

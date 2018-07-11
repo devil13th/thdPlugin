@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<!-- 读取的.properties的路径-->
+		<property name="location">
+			<value>classpath:conf/cfg.properties</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 第一种方式 使用dataSource配置SessionFactory -->
+	<!-- spring proxool集成 -->
+	<bean id="dataSource"
+		class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="driver">
+			<value>${driverClassName}</value>
+		</property>
+		<property name="driverUrl">
+			<value>${url}</value>
+		</property>
+		<property name="user" value="${usr}" />
+		<property name="password" value="${pwd}" />
+		<property name="alias" value="proxoolPool" />
+		<property name="prototypeCount" value="0" />
+		<property name="maximumConnectionCount" value="50" />
+		<property name="minimumConnectionCount" value="2" />
+		<property name="maximumActiveTime" value="300000" />
+		<property name="simultaneousBuildThrottle" value="50" />
+		<property name="houseKeepingTestSql" value="select CURRENT_DATE" />
+	</bean>
+	
+	<!-- dbcp链接数据库 用于开发过程 -->
+	<!--
+		<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverClassName}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${usr}"></property>
+		<property name="password" value="${pwd}"></property>
+		</bean>
+	-->
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">${hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${dialect}</prop>
+				<prop key="hibernate.show_sql">${showsql}</prop>
+				<prop key="hibernate.connection.autocommit">${autocommit}</prop>
+			</props>
+		</property>
+
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/com/thd/pojo/</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- 第二种方式 使用proxool.xml配置SessionFactory -->
+	<!-- proxool连接数据库 用于proxool.xml配置 -->
+	<!-- 
+		<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="hibernateProperties">
+		<props>
+		<prop key="hibernate.dialect">
+		org.hibernate.dialect.MySQLDialect
+		</prop>
+		<prop key="hibernate.show_sql">true</prop>
+		<prop key="hibernate.cglib.use_reflection_optimizer">
+		true
+		</prop>
+		<prop key="hibernate.connection.autocommit">true</prop>
+		<prop key="hibernate.proxool.xml">
+		proxoolconf.xml
+		</prop>
+		<prop key="hibernate.proxool.pool_alias">
+		proxoolPool
+		</prop>
+		</props>
+		</property>
+		<property name="mappingDirectoryLocations">
+		<list>
+		<value>classpath:/com/thd/pojo/</value>
+		</list>
+		</property>
+		</bean>
+	-->
+
+
+	<!-- 第三种方式 使用hibernate.cfg.xml配置SessionFactory -->
+	<!-- 使用hibernate.cfg.xml -->
+	<!-- 
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">	
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+	 -->
+	
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+
+	<!-- hibernate hibernateTemplate配置 -->
+	<bean id="hibernateTemplate"
+		class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 事务处理配置 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 事务处理配置 -->
+	<bean id="serviceProxy" abstract="true" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="add*">PROPAGATION_REQUIRED</prop>
+				<prop key="regist*">PROPAGATION_REQUIRED</prop>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="find*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

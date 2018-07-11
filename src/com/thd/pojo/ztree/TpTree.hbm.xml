@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.thd.pojo.ztree">
+	<class
+		name="TpTree"
+		table="tp_tree"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="treeId"
+			type="string"
+			column="tree_id"
+		>
+			<generator class="uuid.hex"/>
+		</id>
+
+		<property
+			name="treeName"
+			column="tree_name"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="treeCode"
+			column="tree_code"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="treeStatus"
+			column="tree_status"
+			type="string"
+			not-null="false"
+			length="4"
+		/>
+		<property
+			name="treeIsLeaf"
+			column="tree_is_leaf"
+			type="string"
+			not-null="false"
+			length="4"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

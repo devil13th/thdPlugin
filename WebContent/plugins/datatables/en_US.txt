@@ -1,0 +1,22 @@
+{
+           "oAria": {
+               "sSortAscending": " - click/return to sort ascending",
+               "sSortDescending": " - click/return to sort descending"
+           },
+           "sLengthMenu": " _MENU_ records",
+           "sZeroRecords": "对不起，查询不到任何相关数据",
+           "sEmptyTable": "未有相关数据",
+           "sLoadingRecords": "load...",
+           "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries。",
+           "sInfoEmpty": "当前显示0到0条，共0条记录",
+           "sInfoFiltered": "（数据库中共为 _MAX_ 条记录）",
+           "sProcessing": "<img src='../plugins/datatables/process.gif'/> loading...",
+           "sSearch": "模糊查询：",
+           "sUrl": "", 
+           "oPaginate": {
+               "sFirst": "First",
+               "sPrevious": " Previous ",
+               "sNext": " Next ",
+               "sLast": " Last "
+           }
+       }

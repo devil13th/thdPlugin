@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.thd.pojo.data">
+	<class
+		name="SysRole"
+		table="sys_role"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="RoleCode"
+			type="string"
+			column="role_code"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="RoleName"
+			column="role_name"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="RoleDes"
+			column="role_des"
+			type="string"
+			not-null="false"
+			length="200"
+		/>
+		<property
+			name="RoleLevel"
+			column="role_level"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="RoleStatus"
+			column="role_status"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

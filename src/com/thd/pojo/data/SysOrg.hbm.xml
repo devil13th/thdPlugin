@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.thd.pojo.data">
+	<class
+		name="SysOrg"
+		table="sys_org"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="OrgCode"
+			type="string"
+			column="org_code"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="OrgName"
+			column="org_name"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="OrgTreeCode"
+			column="org_tree_code"
+			type="string"
+			not-null="false"
+			length="500"
+		/>
+		
+
+
+	</class>	
+</hibernate-mapping>

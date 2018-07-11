@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:annotation-config/>
+	
+	
+	<!-- dao -->
+	<bean id="pubDao" class="com.thd.dao.PubDao" >
+		<property name="hibernateTemplate">
+			<ref bean="hibernateTemplate" />
+		</property>
+	</bean>
+	
+	<bean id="jdbcDao" class="com.thd.dao.JdbcDao" >
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+	</bean>
+	
+	<!-- service -->
+	<bean id="pubServiceImpl" class="com.thd.service.PubServiceImpl" abstract="true" ></bean>
+	
+	<bean id="dataServiceImpl" class="com.thd.service.data.DataServiceImpl" parent="pubServiceImpl" ></bean>
+	<bean id="dataService" parent="serviceProxy">
+		<property name="target">
+			<ref bean="dataServiceImpl"/>
+		</property>
+	</bean>
+	
+	<bean id="easyUiServiceImpl" class="com.thd.service.easyui.EasyUiServiceImpl" parent="pubServiceImpl"></bean>
+	<bean id="easyUiService" parent="serviceProxy">
+		<property name="target">
+			<ref bean="easyUiServiceImpl"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="zTreeServiceImpl" class="com.thd.service.ztree.ZTreeServiceImpl" parent="pubServiceImpl"></bean>
+	<bean id="zTreeService" parent="serviceProxy">
+		<property name="target">
+			<ref bean="zTreeServiceImpl"/>
+		</property>
+	</bean>
+	
+	<!-- action -->
+	<bean id="easyUiAction" class="com.thd.action.easyui.EasyUiAction" scope="prototype" ></bean>
+	<bean id="zTreeAction" class="com.thd.action.ztree.ZTreeAction" scope="prototype" ></bean>
+	<bean id="uploadAction" class="com.thd.action.upload.UploadAction" scope="prototype" ></bean>
+	<bean id="kindeditorAction" class="com.thd.action.kindeditor.KindeditorAction" scope="prototype" ></bean>
+	<bean id="ueditorAction" class="com.thd.action.ueditor.UeditorAction" scope="prototype" ></bean>
+	<bean id="testAction" class="com.thd.action.test.TestAction" scope="prototype" ></bean>
+	<bean id="dataTablesAction" class="com.thd.action.datatables.DatatablesAction" scope="prototype" ></bean>
+	<bean id="bootstrapAction" class="com.thd.action.bootstrap.BootstrapAction" scope="prototype" ></bean>
+	<bean id="cookieAction" class="com.thd.action.cookie.CookieAction" scope="prototype" ></bean>
+	<bean id="corsAction" class="com.thd.action.cors.CorsAction" scope="prototype" ></bean>
+	
+</beans>
